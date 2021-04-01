@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "RailwayInfo": {
+            "type": "object",
+            "properties": {
+                "comp_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "comp_list"
+                },
+                "detail_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "comp_name": {
+                                "type": "string",
+                                "title": "comp_name"
+                            },
+                            "lines": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "line_name": {
+                                            "type": "string",
+                                            "title": "line_name"
+                                        },
+                                        "line_color": {
+                                            "type": "string",
+                                            "title": "line_color"
+                                        }
+                                    },
+                                    "required": [
+                                        "line_name"
+                                    ]
+                                },
+                                "title": "lines"
+                            }
+                        },
+                        "required": [
+                            "comp_name",
+                            "lines"
+                        ]
+                    },
+                    "title": "detail_list"
+                }
+            },
+            "required": [
+                "comp_list",
+                "detail_list"
+            ]
+        }
+    }
+}
