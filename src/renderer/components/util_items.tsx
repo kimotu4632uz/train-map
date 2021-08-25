@@ -1,22 +1,22 @@
 import { Collapse, ListItem, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import React from "react";
+import React, { useReducer } from "react";
 
 export type SelectableItemProps = {
   content: string;
   index: string;
-  onClick?: (index: string) => void;
+  onClick?: (index: string, state: boolean) => void;
   className?: string;
 };
 
 export const SelectableItem: React.FC<SelectableItemProps> = ({ content, index, onClick, className }) => {
-  const [select, setSelect] = React.useState(false);
+  const [select, selectDispatch] = useReducer((state: boolean) => !state, false);
 
   const handleClick = () => {
-    setSelect(!select);
+    selectDispatch();
 
     if (onClick !== undefined) {
-      onClick(index);
+      onClick(index, select);
     }
   }
 

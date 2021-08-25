@@ -3,6 +3,7 @@ import { createStyles, Drawer, List, makeStyles, Theme } from '@material-ui/core
 
 import { ExpandableItem, SelectableItem } from './util_items';
 import { CustomAppBar } from './custom_app_bar';
+import { visibleReducerAction } from '../index'
 
 const drawerWidth = 240;
 
@@ -36,9 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type CustomHeaderDrawerProps = {
   onGeoJsonImport: React.DispatchWithoutAction;
+  onListItemClick: React.Dispatch<visibleReducerAction>;
 };
 
-export const CustomHeaderDrawer: React.FC<CustomHeaderDrawerProps> = ({ onGeoJsonImport }) => {
+export const CustomHeaderDrawer: React.FC<CustomHeaderDrawerProps> = ({ onGeoJsonImport, onListItemClick }) => {
   const classes = useStyles();
   const [[menulist, menudict], setMenudict] = useState([new Array<string>(), new Map<string, string[]>()]);
   const [iFlag, _] = useState(null);
@@ -64,7 +66,7 @@ export const CustomHeaderDrawer: React.FC<CustomHeaderDrawerProps> = ({ onGeoJso
   useEffect(() => {
     const read_json = async () => {
       console.log('mFlag effect running');
-      const result = await window.api.fetchRailInfo('RailwayInfo');
+      const result = await window.api.fetchRailInfo();
       if (!result) { return; }
 
       const dict = new Map<string, string[]>();
@@ -104,6 +106,7 @@ export const CustomHeaderDrawer: React.FC<CustomHeaderDrawerProps> = ({ onGeoJso
                       content={cContent}
                       index={`${pIndex}-${cIndex}`}
                       className={classes.nested}
+                      onClick={(index, state) => state ? onListItemClick({type: 'add', value: index}) : onListItemClick({type: 'del', value: index})}
                     />
                   ))}
                 </List>

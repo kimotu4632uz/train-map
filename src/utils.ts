@@ -3,6 +3,8 @@ import fs from 'fs';
 export enum IPC_EVENTS {
   FETCH_RAIL_INFO = 'fetch-rail-info',
   READ_RAIL_INFO = 'read-rail-info',
+  FETCH_RAIL_ROAD = 'fetch-rail-road',
+  READ_RAIL_ROAD = 'read-rail-road',
 }
 
 export const FILE_FILTERS_JSON: {

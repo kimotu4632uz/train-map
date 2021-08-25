@@ -32,18 +32,38 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+export type visibleReducerAction = {
+  type: string;
+  value: string;
+};
+
+const visibleReducer = (state: Set<string>, action: visibleReducerAction): Set<string> => {
+  switch (action.type) {
+    case 'add':
+      return state.add(action.value)
+    case 'del':
+      state.delete(action.value);
+      return state
+    default:
+      return state
+  }
+}
 const App: React.FC = () => {
   const classes = useStyles();
   const [gFlag, gFlagDispatch] = useReducer((state: boolean) => !state, false);
+  const [visibleList, visibleListDispatch] = useReducer(visibleReducer, new Set<string>());
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <CustomHeaderDrawer onGeoJsonImport={gFlagDispatch}/>
+      <CustomHeaderDrawer onGeoJsonImport={gFlagDispatch} onListItemClick={visibleListDispatch} />
      <main className={classes.content}>
         <div className={classes.toolbar} />
         <div className={classes.map}>
-        <GoogleMapWrapper importGeoJsonFlag={gFlag}/>
+        <GoogleMapWrapper
+          visibleList={visibleList}
+          importGeoJsonFlag={gFlag}
+        />
        </div>
       </main>
     </div>
